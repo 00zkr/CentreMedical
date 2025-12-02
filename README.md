@@ -98,4 +98,5 @@ Code structuré et facilement extensible
 ## 👤 Auteur
 
 Développé par Rhendour Zakaria
+
 Projet pédagogique – Gestion de cabinet médical
