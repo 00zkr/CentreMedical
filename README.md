@@ -83,7 +83,34 @@ Design épuré et moderne
 
 ## ▶️ Creation dex tableaux (MYSQL):
 
+```text
+-- Creation du table Patient
+CREATE TABLE Patient(
+	idPt INT auto_increment PRIMARY KEY,
+    nom VARCHAR(70),
+    age INT,
+    ville VARCHAR(70)
+);
 
+-- Creation du table Medcin
+CREATE TABLE Medcin(
+	idMd INT auto_increment PRIMARY KEY,
+    nom VARCHAR(70),
+    specialite VARCHAR(70),
+    telephone VARCHAR(10)
+);
+
+CREATE TABLE RDV(
+	idRDV INT auto_increment PRIMARY KEY,
+    dateRDV DATE,
+    acte VARCHAR(70),
+    tarif DOUBLE,
+    idPt INT,
+    idMd INT,
+    FOREIGN KEY (idPt) REFERENCES Patient(idPt),
+    FOREIGN KEY (idMd) REFERENCES Medcin(idMd)
+);
+```
 
 
 ## ✅ Remarques
