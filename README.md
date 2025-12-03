@@ -99,7 +99,7 @@ Code structuré et facilement extensible
 
 https://github.com/user-attachments/assets/f73a7bd9-eef4-4b94-8e74-210b54ab9d20
 
-Installation
+Installation (Le fichier CentreMed.exe est dans le dossier dist)
 
 https://github.com/user-attachments/assets/52e452a8-ea48-4130-87a2-9faca63276f3
 
