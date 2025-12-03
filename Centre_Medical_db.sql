@@ -1,6 +1,17 @@
 Create database Centre_Medical_db;
 use Centre_Medical_db;
 
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 -- Creation du table Patient
 CREATE TABLE Patient(
 	idPt INT auto_increment PRIMARY KEY,
@@ -49,3 +60,11 @@ VALUES
 ('2025-11-12', 'Consultation', 150.00, 1, 1),
 ('2025-11-15', 'Radio', 300.00, 2, 1),
 ('2025-11-20', 'Vaccination', 220.00, 3, 2);
+
+-- Creation du table Utilisateur
+CREATE TABLE User (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(50) NOT NULL UNIQUE,
+    nom VARCHAR(50),
+    password CHAR(64) NOT NULL
+);
