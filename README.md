@@ -35,7 +35,7 @@ Le projet suit une architecture claire basée sur **DAO / Entities / GUI** et ut
 
 ### 📊 Statistiques
 - Graphique du nombre de rendez-vous par mois  
-- Mois affichés en **français**  
+- Mois affichés
 - Graphiques réalisés avec **JFreeChart**  
 
 ---
@@ -57,7 +57,7 @@ Java SE (Swing)
 
 JDBC
 
-MySQL (ou autre SGBD relationnel)
+MySQL
 
 JFreeChart & JCommon
 
