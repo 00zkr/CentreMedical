@@ -77,15 +77,14 @@ Dialogues personnalisés pour les ajouts / modifications
 
 Design épuré et moderne
 
-## ▶️ Exécution du projet
+## ▶️ MCD:
 
-Importer le projet dans NetBeans
+<img width="1341" height="424" alt="{5089F397-BC9E-4AA3-90AE-9A6CB88E3327}" src="https://github.com/user-attachments/assets/f6d1b40d-644c-4964-aacb-5fdd9ba7f855" />
 
-Configurer la connexion à la base de données dans Connexion.java
+## ▶️ Creation dex tableaux (MYSQL):
 
-Créer les tables nécessaires (Patient, Medcin, RDV)
 
-Lancer la classe principale
+
 
 ## ✅ Remarques
 
