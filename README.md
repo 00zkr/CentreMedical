@@ -95,6 +95,14 @@ Filtres et calculs dynamiques
 
 Code structuré et facilement extensible
 
+## ✅ Vidéos
+
+https://github.com/user-attachments/assets/f73a7bd9-eef4-4b94-8e74-210b54ab9d20
+
+Installation
+
+https://github.com/user-attachments/assets/52e452a8-ea48-4130-87a2-9faca63276f3
+
 ## 👤 Auteur
 
 Développé par Rhendour Zakaria
