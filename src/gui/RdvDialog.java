@@ -35,6 +35,10 @@ public class RdvDialog extends javax.swing.JDialog {
             txtPt.setText(String.valueOf(rdv.getPatient().getId()));
             txtMdc.setText(String.valueOf(rdv.getMedcin().getId()));
             setTitle("Modifier Rendez-vous");
+            
+            txtDate.setEnabled(false);
+            txtPt.setEditable(false);
+            txtMdc.setEditable(false);
         } else {
             setTitle("Ajouter Rendez-vous");
         }
@@ -50,12 +54,11 @@ public class RdvDialog extends javax.swing.JDialog {
         Patient pt = pdao.findById(Integer.parseInt(txtPt.getText()));
         Medcin mdc = mdao.findById(Integer.parseInt(txtMdc.getText()));
         
-        if (rdv == null){
-            rdv = new RDV(date, acte, tarif, pt, mdc);
-        }
- 
 
-        if (isAddMode()) rdao.create(rdv);
+        if (isAddMode()){
+            rdv = new RDV(date, acte, tarif, pt, mdc);
+            rdao.create(rdv);
+        }
         else {    
             rdv.setDateRDV(date);
             rdv.setActe(acte);
@@ -70,7 +73,7 @@ public class RdvDialog extends javax.swing.JDialog {
     }
     
     private boolean isAddMode() {
-        return rdv.getId() == 0;
+        return rdv == null;
     }
     
     /**

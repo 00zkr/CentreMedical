@@ -6,7 +6,10 @@
 package gui;
 
 import dao.MedcinDao;
+import dao.PatientDao;
 import dao.RDVDao;
+import entities.Medcin;
+import entities.Patient;
 import entities.RDV;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +23,10 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class Rdvs extends javax.swing.JInternalFrame {
-    int id;
+    Patient selectedPatient;
+    Medcin selectedMedcin;
+    Date selectedDate;
+
     DefaultTableModel model = null;
     RDVDao rdao = new RDVDao();
     MedcinDao mdao = new MedcinDao();
@@ -42,7 +48,8 @@ public class Rdvs extends javax.swing.JInternalFrame {
 
         for (RDV r : list) {
             model.addRow(new Object[]{
-                r.getId(),
+                r.getPatient().getId(),
+                r.getMedcin().getId(),
                 r.getDateRDV(),
                 r.getActe(),
                 r.getTarif(),
@@ -156,7 +163,7 @@ public class Rdvs extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID", "Date", "Acte", "Tarif", "Patient", "Medecin"
+                "PtId", "MdId", "Date", "Acte", "Tarif", "Patient", "Medecin"
             }
         ));
         jTable1.setGridColor(new java.awt.Color(21, 31, 40));
@@ -168,6 +175,10 @@ public class Rdvs extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
+            jTable1.getColumnModel().getColumn(1).setMaxWidth(0);
+        }
 
         txtTarif.setBackground(new java.awt.Color(21, 31, 40));
         txtTarif.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
@@ -186,7 +197,7 @@ public class Rdvs extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTarif, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                .addComponent(txtTarif, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                 .addGap(8, 8, 8))
         );
 
@@ -300,8 +311,7 @@ public class Rdvs extends javax.swing.JInternalFrame {
                         .addGap(35, 35, 35)
                         .addComponent(btnModifier, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
-                        .addComponent(btnSuppr, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnSuppr, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -329,12 +339,13 @@ public class Rdvs extends javax.swing.JInternalFrame {
 
     private void btnModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifierActionPerformed
         // TODO add your handling code here:
-        RDV selectedRdv = rdao.findById(id);
+        if (selectedPatient != null && selectedMedcin != null && selectedDate != null) {
+        RDV selectedRdv = rdao.findByKey(selectedPatient.getId(), selectedMedcin.getId(), selectedDate);
         if (selectedRdv != null) {
             RdvDialog dialog = new RdvDialog((JFrame) SwingUtilities.getWindowAncestor(this), selectedRdv);
             dialog.setVisible(true);
-
             loadRdvs();
+        }
         } else {
             JOptionPane.showMessageDialog(this, "Please select a Rendez-vous first.");
         }
@@ -342,12 +353,13 @@ public class Rdvs extends javax.swing.JInternalFrame {
 
     private void btnSupprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupprActionPerformed
         // TODO add your handling code here:
+        if (selectedPatient != null && selectedMedcin != null && selectedDate != null) {
         int confirm = JOptionPane.showConfirmDialog(this,
             "Etes vous sure de supprimer ce Rendez-vous?",
             "Confirmer suppression", JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
-            RDV r = rdao.findById(id);
+            RDV r = rdao.findByKey(selectedPatient.getId(), selectedMedcin.getId(), selectedDate);
             if (r != null && rdao.delete(r)) {
                 JOptionPane.showMessageDialog(this, "Rendez-vous supprimé.");
                 loadRdvs(); // refresh table
@@ -355,13 +367,21 @@ public class Rdvs extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Rendez-vous pas supprimé.");
             }
         }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select a Rendez-vous first.");
+        }
 
     }//GEN-LAST:event_btnSupprActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         int selectedRow = jTable1.getSelectedRow();
-        id = (int) jTable1.getValueAt(selectedRow, 0);
+        int patientId = (int) jTable1.getValueAt(selectedRow, 0);
+        int medcinId = (int) jTable1.getValueAt(selectedRow, 1);
+        selectedDate = (Date) jTable1.getValueAt(selectedRow, 2);
+        
+        selectedPatient = new PatientDao().findById(patientId);
+        selectedMedcin = new MedcinDao().findById(medcinId);
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
