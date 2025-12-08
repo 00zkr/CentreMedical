@@ -100,13 +100,14 @@ CREATE TABLE Medcin(
     telephone VARCHAR(10)
 );
 
-CREATE TABLE RDV(
-	idRDV INT auto_increment PRIMARY KEY,
+-- Creation du table RDV
+CREATE TABLE RDV (
     dateRDV DATE,
-    acte VARCHAR(70),
+    acte VARCHAR(255),
     tarif DOUBLE,
-    idPt INT,
+	idPt INT,
     idMd INT,
+    PRIMARY KEY (idPt, idMd, dateRDV),
     FOREIGN KEY (idPt) REFERENCES Patient(idPt),
     FOREIGN KEY (idMd) REFERENCES Medcin(idMd)
 );
